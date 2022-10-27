@@ -6,7 +6,6 @@ async function getAgoda() {
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
 
-
         await page.goto(url)
 
         const getData = await page.evaluate(() => {
@@ -17,21 +16,19 @@ async function getAgoda() {
                 adults: document.querySelector('[data-selenium="adultValue"]').innerText.split(' ')[0],
                 check_in: document.querySelector('[data-selenium="checkInText"]').innerText,
                 check_out: document.querySelector('[data-selenium="checkOutText"]').innerText,
-                children: [],
-                coordinates: [],
-                country: document.querySelector('.HeaderCerebrum__Address').innerText.split(',')[4],
+                children: document.querySelector('[data-selenium="childValue"]') ? document.querySelector('[data-selenium="childValue"]') : 0,
+                country: document.querySelector('.HeaderCerebrum__Address').innerText.split(',')[4].trim(),
                 currency: document.querySelector('[data-ppapi="room-price-currency"]').innerText,
                 hotel_name: document.querySelector('.HeaderCerebrum__Name').innerText,
-                language: '',
-                location: document.querySelector('.HeaderCerebrum__Address').innerText.split(',')[3],
+                location: document.querySelector('.HeaderCerebrum__Address').innerText.split(',')[3].trim(),
                 no_rooms: Number(document.querySelector('[data-selenium="roomValue"]').innerText.split('')[0]),
                 price: Number(document.querySelector('[data-ppapi="room-price"]').innerText),
                 priceWithTaxes: Number(document.querySelector('[data-ppapi="room-price"]').innerText) + (typeof taxes != 'string' ? taxes : 0),
-                price_type: '',
                 taxes: taxes,
-                url: '',
-                zip: document.querySelector('.HeaderCerebrum__Address').innerText.split(',')[5]
+                url: window.location.href,
+                zip: document.querySelector('.HeaderCerebrum__Address').innerText.split(',')[5].trim()
             }
+
             return data
         })
 

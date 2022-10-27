@@ -16,7 +16,7 @@ Clone the project
 Get in the project's folder
 
 ```bash
-  cd agoda-search
+  cd agoda-room-search
 ```
 
 Install dependencies
